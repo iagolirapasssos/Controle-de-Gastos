@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Gastos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <button class="tab-button active" data-tab="controle">Controle</button>
+            <button class="tab-button" data-tab="adicionar">Adicionar</button>
+            <button class="tab-button" id="graficoButton" data-tab="grafico">Gráfico</button>
+            <button class="tab-button" data-tab="lista">Lista</button>
+        </nav>
+
+        <div id="controle" class="tab-content active">
+            <div class="card">
+                <h1>Controle de Gastos</h1>
+                <div class="form-group">
+                    <label for="receitaMensal">Receita Mensal (R$):</label>
+                    <input type="number" id="receitaMensal" placeholder="Digite a receita mensal" oninput="atualizarLimite()">
+                </div>
+                <div class="form-group">
+                    <label for="limite">Limite Mensal (R$):</label>
+                    <input type="number" id="limite" readonly>
+                </div>
+                <button onclick="definirLimiteEReceita()">Definir</button>
+            </div>
+        </div>
+
+        <div id="adicionar" class="tab-content">
+            <div class="card">
+                <h2>Adicionar Gasto</h2>
+                <div class="form-group">
+                    <label for="produto">Produto:</label>
+                    <input type="text" id="produto" placeholder="Nome do produto">
+                </div>
+                <div class="form-group">
+                    <label for="valor">Valor (R$):</label>
+                    <input type="number" id="valor" placeholder="Valor do gasto">
+                </div>
+                <button onclick="adicionarGasto()">Adicionar Gasto</button>
+                <button class="delete-btn" onclick="deletarDados()">Deletar dados</button>
+            </div>
+
+            <div class="card">
+                <h2>Status do Gasto Mensal</h2>
+                <div id="statusBar">
+                    <div id="statusBarFill"></div>
+                </div>
+                <p id="statusInfo">
+                    Gasto atual: R$ <span id="gastoAtual"></span> de R$ <span id="limiteAtual"></span> <span class="tooltip-icon" data-tooltip="Mostra a soma total de todos os gastos adicionados até o momento e o compara com o limite mensal.">?</span><br>
+                    Economia sugerida: R$ <span id="economiaSugerida"></span> <span class="tooltip-icon" data-tooltip="Calcula 20% da receita mensal como valor sugerido para economia.">?</span><br>
+                    Outras atividades: R$ <span id="outrasAtividades"></span> <span class="tooltip-icon" data-tooltip="Calcula 10% da receita mensal como valor sugerido para outras atividades.">?</span><br>
+                    Diferença: R$ <span id="diferenca"></span> <span class="tooltip-icon" data-tooltip="Mostra a diferença entre a receita mensal e o total gasto.">?</span><br>
+                    Percentual do orçamento gasto: <span id="percentualGasto"></span>% <span class="tooltip-icon" data-tooltip="Mostra o percentual da receita mensal que já foi gasto.">?</span><br>
+                    Média diária de gastos: R$ <span id="mediaDiariaGastos"></span> <span class="tooltip-icon" data-tooltip="Média diária dos gastos até o momento.">?</span><br>
+                    Projeção de gastos mensal: R$ <span id="projecaoGastosMensal"></span> <span class="tooltip-icon" data-tooltip="Projeção do total de gastos até o final do mês com base na média diária atual.">?</span><br>
+                    Saldo disponível: R$ <span id="saldoDisponivel"></span> <span class="tooltip-icon" data-tooltip="Saldo disponível após subtrair os gastos da receita mensal.">?</span><br>
+                    Percentual economizado: <span id="percentualEconomizado"></span>% <span class="tooltip-icon" data-tooltip="Percentual da receita mensal que foi economizado até o momento.">?</span>
+                </p>
+            </div>
+        </div>
+
+        <div id="grafico" class="tab-content">
+            <div class="card">
+                <h2>Gráfico de Gastos</h2>
+                <canvas id="graficoGastos"></canvas>
+            </div>
+        </div>
+
+        <div id="lista" class="tab-content">
+            <div class="card">
+                <h2>Lista de Gastos</h2>
+                <ul id="listaGastos"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="errorContainer" class="error-container" style="display: none;">
+        <p id="errorMessage" class="error-message"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
